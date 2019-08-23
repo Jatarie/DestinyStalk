@@ -1,0 +1,38 @@
+.posts{
+  margin: 2% 20% 0 20%;
+}
+
+.FilterButton ul{
+  color:red;
+  display: block;
+
+}
+li{
+  float:left;
+}
+
+.FilterButton button{
+  display: inline-block;
+  width: 18%;
+  height: 30px;
+  background-color: black;
+  color:white;
+  border:1px solid white;
+  margin:1%;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.FilterButton button:hover{
+  color:grey;
+}
+
+.FilterButton{
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+ul{
+  margin: 0;
+  padding:0;
+}
