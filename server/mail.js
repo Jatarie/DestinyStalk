@@ -22,3 +22,5 @@ function email(title, body) {
         }
     });
 };
+
+module.exports = email;

@@ -2,7 +2,8 @@
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const fs = require('fs')
+const fs = require('fs');
+const email = require('./mail');
 
 var months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -99,7 +100,6 @@ async function Reddit() {
     return rt;
 };
 
-
 async function UpdateDatabase() {
     var dataTwitter = Twitter();
     var dataReddit = Reddit();
@@ -115,6 +115,26 @@ async function UpdateDatabase() {
 
     data.sort((a, b) => b.date - a.date);
     data = { "data": data };
+
+    var dataBase = JSON.parse(fs.readFileSync("data.json"));
+    var mostRecent = dataBase.data.data[0];
+    var current = data.data[0];
+
+    if (current.text != mostRecent.text) {
+        email("localhost:3000", "localhost:3000");
+    }
+
+    // while (mostRecent.text !== current.text) {
+    //     console.log(current.text);
+    //     email("localhost:3000", "localhost:3000");
+    //     counter += 1;
+    //     var current = data.data[counter];
+    //     if (counter === 5) {
+    //         console.log("FAIL");
+    //         break;
+    //     }
+    // }
+
 
     fs.writeFile("data.json", JSON.stringify({ "data": data }), function (err) {
         if (err) {
@@ -167,8 +187,6 @@ function parseOverrustle(data) {
     var rt = { "type": "OverRustle", "date": datetime.getTime() / 1000, "text": text, "link": null };
     return rt;
 };
-
-
 
 app.listen(8000, () => {
     console.log('Example app listening on port 8000!')
