@@ -4,6 +4,7 @@ const app = express();
 const axios = require('axios');
 const fs = require('fs');
 const email = require('./mail');
+const notifier = require('node-notifier');
 
 var months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -121,20 +122,12 @@ async function UpdateDatabase() {
     var current = data.data[0];
 
     if (current.text != mostRecent.text) {
-        email("localhost:3000", "localhost:3000");
+        notifier.notify('Message');
+        notifier.notify({
+            title: 'My notification',
+            message: 'Hello, there!'
+        });
     }
-
-    // while (mostRecent.text !== current.text) {
-    //     console.log(current.text);
-    //     email("localhost:3000", "localhost:3000");
-    //     counter += 1;
-    //     var current = data.data[counter];
-    //     if (counter === 5) {
-    //         console.log("FAIL");
-    //         break;
-    //     }
-    // }
-
 
     fs.writeFile("data.json", JSON.stringify({ "data": data }), function (err) {
         if (err) {
