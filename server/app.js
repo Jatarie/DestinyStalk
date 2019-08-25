@@ -181,8 +181,35 @@ function parseOverrustle(data) {
     return rt;
 };
 
+app.get("/graphapi", (req, res) => {
+    var data = fs.readFileSync("E:\\World of Warcraft\\_retail_\\WTF\\Account\\108778585#1\\SavedVariables\\XP.lua", 'utf-8')
+    var lineRX = /\".+?\]/gm
+
+    var rt = { plots: [] };
+
+    data.match(lineRX).map(line => {
+        var a = line.split(",");
+        var character = a[0];
+        var currentXP = a[1];
+        var maxXP = a[2];
+        var level = a[3];
+        var timeStamp = a[4];
+        var playedLevel = a[5];
+        var playedTotal = a[6];
+        var area = a[7];
+        rt.plots.push({ x: playedTotal, y: parseInt((currentXP / maxXP) * 100) })
+    })
+
+    console.log("Graph");
+
+    res.send(JSON.stringify({ "data": rt }));
+
+
+})
+
 app.listen(8000, () => {
     console.log('Example app listening on port 8000!')
+
     UpdateDatabase();
     setInterval(() => {
         UpdateDatabase();
