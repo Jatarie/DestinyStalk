@@ -1,0 +1,18 @@
+.recipe{
+    background-color: #4d7a91;
+    width: 70%;
+    margin:auto;
+    padding:10px;
+    text-align: center;
+    border:2px solid black;
+    margin-top: 20px
+    
+}
+
+.name{
+    font-size: 30px;
+}
+
+.recipe{
+    font-size: 20px;
+}
